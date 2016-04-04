@@ -31,9 +31,9 @@
 
 		if ($db->findOne($data))
 		{
-			echo "You are online!";
+			echo "Вы успешно вошли!";
 			echo "<br>";
-			echo "Your login: ".$db->findOne($data)['mail'];
+			echo "Ваш логин: ".$db->findOne($data)['mail'];
 			echo "<br>";
 			$log = true;
 		}
