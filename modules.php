@@ -21,7 +21,7 @@
 		}
 	}
 
-	function login()
+	function login($mail, $password)
 	{
 		$con = new MongoClient($mail, $password);
 		$db = $con-> test4->users;
