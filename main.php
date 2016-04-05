@@ -1,7 +1,7 @@
 <!doctype html>
 
 <h1> Sign Up </h1>
-<form action="test2.php" method="post">
+<form action="signup.php" method="post">
 	Почта: <input type="email" name="mail" placeholder="Your mail">
 	Пароль: <input type="password" name="password" placeholder="Your password">
 	<input type="submit" value="Sign Up">
