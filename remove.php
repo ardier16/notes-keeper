@@ -15,7 +15,7 @@
                   <h2> Update</h2>
                   <input type="text" name="title" value='.$_POST['title1'].' placeholder="Title" required><br><br>
                   <input type="text" name="note" value='.$_POST['note1'].' placeholder="Note" required>
-                  <input type="hidden" name="foo" value='.$_POST['foo'].'><br>
+                  <input type="hidden" name="idd" value='.$_POST['idd'].'><br>
                   <input type="submit" name="upd" value="upd">
                   </form>';
 
@@ -24,7 +24,7 @@
 
     else if ($_POST['upd'] == 'upd')
     {
-        update_note($_POST['foo'], $_POST['title'], $_POST['note']);
+        update_note($_POST['idd'], $_POST['title'], $_POST['note']);
         echo "UPDATED.";
         echo "<br>";
         echo "<script>window.location='main.php';</script>"; 
