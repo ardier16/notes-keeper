@@ -1,6 +1,9 @@
 <?php
 	$boot = '<link href="css/bootstrap.min.css" rel="stylesheet">
 			<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+			<link href="css/bootstrap-responsive.css" rel="stylesheet">  
+            <link href="css/main.css" rel="stylesheet"> 
+            <link href="css/notes.css" rel="stylesheet"> 		
              <script src="jquery-2.2.3.js"></script>
              <script src="js/bootstrap.min.js"></script>
     			';
@@ -23,24 +26,76 @@
 		 && $password == $password2)
         {
 			$db->insert($data);
-			echo "<h1>Вы успешно зарегистрированы!</h1>";
+			echo "<h1 style='text-align: center; font-size: 42; font-family: cursive;'>Вы успешно зарегистрированы!</h1>";
             echo "<br>";
-            echo "Ваш логин: ".$db->findOne($data)['login'];
+            echo "<h2 style='text-align: center; font-size: 24; font-family: cursive;'>Ваш логин: ".$db->findOne($data)['login'];
             echo "<br>";
-            echo "<h3><a href='main.php'>Вернуться на главную</a></h3>";
+            echo "<h3 style='text-align: center; font-size: 24; font-family: cursive;'><a href='main.php'>Вернуться на главную</a></h3>";
 		}
 			
 		else
 		{
-			if ($db->findOne(array("login" => $login)))
-				echo "<h1>Такой логин уже используется.</h1>";
-			else if ($db->findOne(array("mail" => $mail)))
-				echo "<h1>Такой e-mail уже используется.</h1>";
-			else if ($password != $password2)
-				echo "<h1>Пароли не совпадают.</h1>";
+            print("<h1 id='header1'>Notes</h1>
+            <h1 id='header2'>Keeper</h1>");
 
-            echo "<br>";
-			echo "<h3><a href='main.php'>Вернуться на главную</a></h3>";
+			if ($db->findOne(array("login" => $login)))
+			{
+				print('<form class="form-signin" action="" method="post">
+                <h2 style="text-align: center; font-size: 36; font-family: cursive;"> Регистрация </h2>
+                <div class="control-group error">
+                <input class="input-block-level" type="text" id="inputError" name="login" placeholder="Логин" autofocus required>
+                </div><p></p>
+                <input class="input-block-level" type="email" name="mail" placeholder="E-mail" required><p></p>
+                <input class="input-block-level" type="password" name="password" placeholder="Пароль" required>
+                <input class="input-block-level" type="password" name="password2" placeholder="Повторите пароль" required>
+                <p></p>
+                <h4>Такой логин уже используется.</h4>
+                <input class="btn btn-success btn-large" style="width: 300" type="submit" value="&nbsp; Зарегистрироваться &nbsp;"><p></p>
+                <a class="btn btn-success btn-large" style="width: 260" href="main.php">Вернуться на главную &nbsp;</a>
+            </form>
+
+            ');
+			}
+
+			else if ($db->findOne(array("mail" => $mail)))
+			{
+				print('<form class="form-signin" action="" method="post">
+                <h2 style="text-align: center; font-size: 36; font-family: cursive;"> Регистрация </h2>
+                <div class="control-group">
+                <input class="input-block-level" type="text" name="login" placeholder="Логин" autofocus required>
+                </div><p></p>
+                <div class="control-group">
+                <input class="input-block-level" type="email" id="inputError" name="mail" placeholder="E-mail" required>
+                </div><p></p>
+                <input class="input-block-level" type="password" name="password" placeholder="Пароль" required>
+                <p></p>
+                <input class="input-block-level" type="password" name="password2" placeholder="Повторите пароль" required><p></p>
+                <h4>Такой e-mail уже используется.</h4>
+                <input class="btn btn-success btn-large" style="width: 300" type="submit" value="&nbsp; Зарегистрироваться &nbsp;"><p></p>
+                <a class="btn btn-success btn-large" style="width: 260" href="main.php">Вернуться на главную &nbsp;</a>
+            </form>');				
+			}
+			else if ($password != $password2)
+			{
+				print('<form class="form-signin" action="" method="post">
+                <h2 style="text-align: center; font-size: 36; font-family: cursive;"> Регистрация </h2>
+                <div class="control-group">
+                <input class="input-block-level" type="text" name="login" placeholder="Логин" autofocus required>
+                </div><p></p>
+                <div class="control-group">
+                <input class="input-block-level" type="email" name="mail" placeholder="E-mail" required>
+                </div><p></p>
+                <div class="control-group">
+                <input class="input-block-level" type="password" id="inputError" name="password" placeholder="Пароль" required>
+                </div><p></p>
+                <div class="control-group">
+                <input class="input-block-level" type="password" id="inputError" name="password2" placeholder="Повторите пароль" required>
+                </div><p></p>
+                <h4>Пароли не совпадают.</h4>
+                <input class="btn btn-success btn-large" style="width: 300" type="submit" value="&nbsp; Зарегистрироваться &nbsp;"><p></p>
+                <a class="btn btn-success btn-large" style="width: 260" href="main.php">Вернуться на главную &nbsp;</a>
+            </form>');					
+			}
 		}
 	}
 
@@ -99,32 +154,97 @@
         $filter = array("id"=>$id);
         $data = $notes->find();
 
+        echo "<div id='notes'>";
+        $h = 0;
+        $w = 0;
+        $count = 0;
         while($document = $data->getNext())
         {
             if ($document["id"] == $id)
             {
-                echo "<p><h2><b> Title: </b>" . $document["title"] . "</h2>";
-                echo "<h3><b>Text: </b>" . $document["text"] . "</h3></p>";
+                $div = "<div id='note' style='margin-top:".$h."px; margin-left:".$w."px; background-color: ".get_color($count % 6)."'>
+                <p><h2 id='title'>".htmlentities($document["title"])."</h2></p><p><h4 id='text'>".htmlentities($document["text"])."</h4></p>";
+               
                 $res = $document["_id"];
-                print '<form action="remove.php" method="post">'.
-                      '
-                      <input type="submit" class="btn btn-danger" name="sub" value="remove">
-                      <input type="submit" class="btn btn-primary" name="sub" value="update">
+                print $div.'<form action="remove.php" method="post">'.'  
+                      <input type="submit" style="margin-left: 5px;height: 40px;width: 140px; font-size: 20" class="btn btn-danger" name="sub" value="Удалить">
+                      <input type="submit" style="margin-left: 5px;height: 40px;width: 140px; font-size: 20" class="btn btn-primary" name="sub" value="Изменить">                    
                       <input type="hidden" name="idd" value='.$res.'>
-                      <input type="hidden" name="title1" value='.$document["title"].'>
-                      <input type="hidden" name="note1" value='.$document["text"].'>
-                      </form>';
+                      <input type="hidden" name="title1" value='.htmlentities($document["title"]).'>
+                      <input type="hidden" name="note1" value='.htmlentities($document["text"]).'>
+                      </form></div>';
+                
+                $w += 320;
+                $count++;
+                if (!$check)
+                {
+                    $check = !$check;
+                    $h = -206;
+
+                }
+
+                if ($count % 4 == 0)
+                {
+                    $h += 226;
+                    $w = 0;
+                    $check = !$check;
+                }
+
+
+                    
             }
             
         }
 
-        print '<form action="remove.php" method="post">
-                  <h2> Add Note</h2>
-                  <input type="text" name="title" placeholder="Title" required><br><br>
-                  <input type="text" name="note" placeholder="Note" required>
+        print '<div id="note" style="
+                    margin-top:'.$h.'px;
+                    margin-left:'.$w.'px;
+                    
+                    background-color: '.get_color($count % 6).';
+                "><center><form action="remove.php" method="post">
+                  <h2 style="
+                    margin-top: 5px;
+                ">Новая заметка</h2>
+                  <input type="text" maxlength=17 style="
+                    margin-top: -5px;
+                    height: 30px;
+                    font-size: 22;
+                    width: 250px;
+                " name="title" placeholder="Заголовок" required>
+                  <textarea name="note" placeholder="Заметка" required style="
+                    margin-top: 0px;
+                    width: 250px;
+                    margin-left: 5px;
+                "></textarea>
                   <input type="hidden" name="id" value='.$id.'><br>
-                  <input type="submit" name="add" value="add">
-                  </form>';
+                  <input type="submit" style="width: 280px; font-size: 20" class="btn btn-large btn-success" name="add" value="Добавить заметку">
+                  </form></center></div>';
+    }
+
+    function get_color($number)
+    {
+        switch ($number) {
+            case 0:
+                return "rgba(244, 239, 173, 0.74)";
+                break;
+            case 1:
+                return "rgba(255, 186, 186, 0.8)";
+                break;
+            case 2:
+                return "lightcyan";
+                break;
+            case 3:
+                return "rgba(144, 238, 144, 0.68)";
+                break;
+            case 4:
+                return "rgba(148, 43, 166, 0.34)";
+                break;
+            case 5:
+                return "rgba(143, 255, 0, 0.61)";
+                break;                            
+            default:
+                break;
+        }
     }
 ?>
 
