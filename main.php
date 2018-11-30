@@ -24,8 +24,7 @@
             </form>';
 
 
-    if ($id)
-    {
+    if ($id) {
         echo "<h2 id='welcome'>Добро пожаловать, ";
         echo "<i>".$_POST['login']."</i></h2>
              <h1 id='header1'>Notes</h1>
@@ -33,16 +32,10 @@
         echo "<form action=''><a class='btn btn-primary' id='logout' name='logout' href='main.php'>Выйти</a></form>";
         echo "<br>";
 
-        show_notes($id);
-        
-    }
-
-    else
-    {
-        if ($_POST['login'])
-        {
-            print '<!doctype html>
-            <head>
+        show_notes($id);   
+    } else if ($_POST['login']) {
+        print '<!doctype html>
+			<head>
             </head>
             <h1 id="header1">Notes</h1>
             <h1 id="header2">Keeper</h1>
@@ -58,10 +51,7 @@
                 <input class="btn btn-success btn-large" style="width: 150" type="submit" value="Войти">
                 <a class="btn btn-success btn-large"" href="signup.php">Регистрация</a>
             </form>';
-        }
-
-        else
-            print $form;
+    } else {
+        print $form;	
     }
-
 ?>

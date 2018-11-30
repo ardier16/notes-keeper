@@ -1,16 +1,14 @@
 <?php
     require "modules.php";
-    print $boot;
+    
+	print $boot;
 
-    if(isset($_POST['mail']))
-    {
+    if(isset($_POST['mail'])) {
         $pass = md5($_POST['password']);
         $pass2 = md5($_POST['password2']);
     	signup($_POST['login'], $_POST['mail'], $pass, $pass2);
-    }
-    else
-    {
-    	    $form = '<!doctype html>          
+    } else {
+    	$form = '<!doctype html>          
            <h1 id="header1">Notes</h1>
             <h1 id="header2">Keeper</h1>
            <form class="form-signin" action="" method="post">
@@ -25,8 +23,6 @@
                 <a class="btn btn-success btn-large" style="width: 260" href="main.php">Вернуться на главную &nbsp;</a>
             </form>';
 
-            print $form;
-    }
-
-    
+        print $form;
+    }  
 ?>

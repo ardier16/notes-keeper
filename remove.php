@@ -2,18 +2,14 @@
     require "modules.php";
     print $boot;
     
-    if ($_POST['sub'] == 'Удалить')
-    {
+    if ($_POST['sub'] == 'Удалить') {
         remove_note($_POST['idd']);
         echo '<h1 id="header1">Notes</h1>
             <h1 id="header2">Keeper</h1>
         <h2 id="msg">УДАЛЕНО</h2>';
         echo "<br>";
         echo "<script>window.location='main.php';</script>"; 
-    }
-
-    else if ($_POST['sub'] == 'Изменить')
-    {
+    } else if ($_POST['sub'] == 'Изменить') {
         $upd = '<h1 id="header1">Notes</h1>
             <h1 id="header2">Keeper</h1>
         <form class="form-signin" action="" method="post">
@@ -26,26 +22,21 @@
                   </form></center>';
 
         print $upd;
-    }
-
-    else if ($_POST['upd'] == 'Обновить')
-    {
+    } else if ($_POST['upd'] == 'Обновить') {
         update_note($_POST['idd'], $_POST['title'], $_POST['note']);
-       echo '<h1 id="header1">Notes</h1>
+        
+		echo '<h1 id="header1">Notes</h1>
             <h1 id="header2">Keeper</h1>
         <h2 id="msg">ОБНОВЛЕНО</h2>';
         echo "<br>";
         echo "<script>window.location='main.php';</script>"; 
-    }
-
-    else if ($_POST['add'] == 'Добавить заметку')
-    {
+    } else if ($_POST['add'] == 'Добавить заметку') {
         add_note($_POST['id'], $_POST['title'], $_POST['note']);
-        echo '<h1 id="header1">Notes</h1>
+        
+		echo '<h1 id="header1">Notes</h1>
             <h1 id="header2">Keeper</h1>
         <h2 id="msg">ДОБАВЛЕНО</h2>';
         echo "<br>";
         echo "<script>window.location='main.php';</script>"; 
     }    
-
 ?>
